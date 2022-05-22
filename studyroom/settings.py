@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     
     'rooms.apps.RoomsConfig',
+    'chat_messages.apps.ChatMessagesConfig',
 ]
 
 MIDDLEWARE = [
