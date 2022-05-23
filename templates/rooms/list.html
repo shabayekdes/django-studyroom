@@ -1,0 +1,28 @@
+{% extends 'base.html' %} {% block content %}
+<h1>List Rooms</h1>
+<a href="{% url 'create-room' %}">New Room</a>
+<dev class="row mt-3">
+    {% if objects %} {% for object in objects %}
+    <div class="col-6 mb-3">
+        <h5 class="card-title">{{ object.name }}</h5>
+        <p class="card-text">{{ object.description }}</p>
+        {% comment %}
+        <a href="{% url 'update-room' object.id %}" class="btn btn-primary"
+          >Update</a
+        >
+        {% endcomment %} {% comment %}
+        <a href="{% url 'delete-room' object.id %}" class="btn btn-danger"
+          >Delete</a
+        >
+        {% endcomment %}
+      </div>
+      {% endfor %} {% else %}
+      <div class="card mt-3">
+        <div class="card-body">
+          <p>No rooms found</p>
+        </div>
+        {% endif %}
+      </div>
+      {% endblock %}
+</dev>
+</div>
