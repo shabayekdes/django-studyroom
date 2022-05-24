@@ -1,13 +1,22 @@
+from pydoc_data.topics import topics
 from django.shortcuts import render, redirect, get_object_or_404
 
 from .forms import RoomForm
 from .models import Room
+from topics.models import Topic
 
 # Create your views here.
 def list_rooms(request):
-    obj = Room.objects.all()
+    query = request.GET.get('topic')
+    if query is None or query == "ALL":
+        rooms = Room.objects.all()
+    else:
+        rooms = Room.objects.search(query=query)
+
+    topics = Topic.objects.all()
     context = {
-        'objects': obj
+        'rooms': rooms,
+        'topics': topics,
     }
     return render(request, 'rooms/list.html', context)
 
