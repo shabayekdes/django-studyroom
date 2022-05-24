@@ -7,7 +7,7 @@ from topics.models import Topic
 
 # Create your views here.
 def list_rooms(request):
-    query = request.GET.get('topic')
+    query = request.GET.get('q')
     if query is None or query == "ALL":
         rooms = Room.objects.all()
     else:
@@ -16,6 +16,7 @@ def list_rooms(request):
     topics = Topic.objects.all()
     context = {
         'rooms': rooms,
+        'rooms_count': rooms.count(),
         'topics': topics,
     }
     return render(request, 'rooms/list.html', context)

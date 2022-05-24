@@ -4,16 +4,16 @@
     <div class="col-4">
         <h3>Browse Topics</h3>
         <ul>
-            <li><a href="{% url 'list-rooms' %}?topic=ALL">ALL</a></li>
+            <li><a href="{% url 'list-rooms' %}?q=ALL">ALL</a></li>
             {% for topic in topics %}
-            <li><a href="{% url 'list-rooms' %}?topic={{ topic.name }}">{{ topic.name }}</a></li>
+            <li><a href="{% url 'list-rooms' %}?q={{ topic.name }}">{{ topic.name }}</a></li>
             {% endfor %}
         </ul>
     </div>
     <div class="col-8">
         {% if rooms %} 
         <div class="d-flex">
-            <div class="p-2 flex-grow-1"><h2>List Available Rooms</h2></div>
+            <div class="p-2 flex-grow-1"><h2>List Available Rooms</h2> ({{ rooms_count }}) rooms available</div>
             <div class="p-2"><a href="{% url 'create-room' %}" class="btn btn-info">Start New Room</a></div>
           </div>
         
