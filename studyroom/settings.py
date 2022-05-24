@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'rooms.apps.RoomsConfig',
     'chat_messages.apps.ChatMessagesConfig',
     'topics.apps.TopicsConfig',
+    'accounts.apps.AccountsConfig',
 ]
 
 MIDDLEWARE = [
