@@ -1,5 +1,7 @@
 from pydoc_data.topics import topics
 from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib.auth.decorators import login_required
+from django.http import HttpResponse
 
 from .forms import RoomForm
 from .models import Room
@@ -21,6 +23,7 @@ def list_rooms(request):
     }
     return render(request, 'rooms/list.html', context)
 
+@login_required(login_url='/login/')
 def create_room(request):
     form = RoomForm(request.POST or None)
     if form.is_valid():
@@ -31,8 +34,12 @@ def create_room(request):
     }
     return render(request, 'rooms/create.html', context=context)
 
+@login_required(login_url='/login/')
 def update_room(request, id=None):
     obj = get_object_or_404(Room, pk=id)
+    if request.user != obj.host:
+        return HttpResponse('You are not allowed to update this room.')
+
     form = RoomForm(instance=obj, data=request.POST or None)
     if form.is_valid():
         form.save()
