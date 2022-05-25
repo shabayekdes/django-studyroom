@@ -1,6 +1,8 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth import login, logout
+from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 def login_view(request):
@@ -19,13 +21,11 @@ def login_view(request):
     }
     return render(request, 'accounts/login.html', context=context)
 
-
 def logout_view(request):
     if request.method == "POST":
         logout(request)
         return redirect("/login/")
     return render(request, "accounts/logout.html", {})
-
 
 def register_view(request):
     form = UserCreationForm(request.POST or None)
@@ -37,3 +37,14 @@ def register_view(request):
         return redirect('list-rooms')
     context = {"form": form}
     return render(request, "accounts/register.html", context)
+
+@login_required
+def show_profile(request, id=None):
+    user = User.objects.get(id=id)
+    rooms = user.room_set.all()
+
+    context = {
+        'user': user,
+        'rooms': rooms,
+    }
+    return render(request, "accounts/show_profile.html", context=context)

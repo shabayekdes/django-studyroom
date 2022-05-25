@@ -54,7 +54,9 @@ def view_room(request, id=None):
 def create_room(request):
     form = RoomForm(request.POST or None)
     if form.is_valid():
-        form.save()
+        obj = form.save(commit=False)
+        obj.host = request.user
+        obj.save()
         return redirect('list-rooms')
     context = {
         'form': form,

@@ -18,12 +18,11 @@
           </div>
         
             {% for object in rooms %}
-
             <div class="d-flex">
                 <div class="p-2 flex-grow-1">
                     <h2 class="card-title">{{ object.name }}</h2> 
                     <p>
-                        @{{ object.host }} - Topic: {{ object.topic.name }}
+                        <a href="{% url 'show-profile' object.host.id %}">@{{ object.host }}</a> - Topic: {{ object.topic.name }}
                     </p>
                 </div>
                 <div class="p-2"><a href="{% url 'view-room' object.id %}" class="btn btn-primary btn-sm">View</a></div>
