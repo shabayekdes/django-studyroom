@@ -18,13 +18,12 @@
           </div>
         
             {% for object in rooms %}
-            <div class"card">
-                <h5 class="card-title">{{ object.name }}</h5>
-                <div class="card-body">
-                    <p>{{ object.description }}</p>
-                    <a href="{% url 'update-room' object.id %}" class="btn btn-warning">Update</a>
-                </div>
-            </div>
+
+            <div class="d-flex">
+                <div class="p-2 flex-grow-1"><h2 class="card-title">{{ object.name }}</h2></div>
+                <div class="p-2"><a href="{% url 'view-room' object.id %}" class="btn btn-primary btn-sm">View</a></div>
+                <div class="p-2"><a href="{% url 'update-room' object.id %}" class="btn btn-warning btn-sm">Update</a></div>
+              </div>
             {% endfor %} 
         {% else %}
             <p>No rooms found</p>

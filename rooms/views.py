@@ -1,4 +1,6 @@
+from email.message import Message
 from pydoc_data.topics import topics
+import re
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
@@ -6,6 +8,7 @@ from django.http import HttpResponse
 from .forms import RoomForm
 from .models import Room
 from topics.models import Topic
+from chat_messages.forms import MessageForm
 
 # Create your views here.
 def list_rooms(request):
@@ -22,6 +25,24 @@ def list_rooms(request):
         'topics': topics,
     }
     return render(request, 'rooms/list.html', context)
+
+def view_room(request, id=None):
+    room = get_object_or_404(Room, pk=id)
+    messages = room.message_set.all()
+    form = MessageForm(request.POST or None)
+    if request.method == 'POST' and form.is_valid():
+        message = form.save(commit=False)
+        message.user = request.user
+        message.room = room
+        message.save()
+        return redirect('view-room', id=id)
+
+    context = {
+        'room': room,
+        'messages': messages,
+        'message_form': form,
+    }
+    return render(request, 'rooms/details.html', context=context)
 
 @login_required(login_url='/login/')
 def create_room(request):
