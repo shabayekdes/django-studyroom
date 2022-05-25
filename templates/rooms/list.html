@@ -1,8 +1,8 @@
 {% extends 'base.html' %} 
 {% block content %}
 <div class="row mt-3">
-    <div class="col-4">
-        <h3>Browse Topics</h3>
+    <div class="col-2">
+        <h5>Browse Topics</h5>
         <ul>
             <li><a href="{% url 'list-rooms' %}?q=ALL">ALL</a></li>
             {% for topic in topics %}
@@ -20,7 +20,12 @@
             {% for object in rooms %}
 
             <div class="d-flex">
-                <div class="p-2 flex-grow-1"><h2 class="card-title">{{ object.name }}</h2></div>
+                <div class="p-2 flex-grow-1">
+                    <h2 class="card-title">{{ object.name }}</h2> 
+                    <p>
+                        @{{ object.host }} - Topic: {{ object.topic.name }}
+                    </p>
+                </div>
                 <div class="p-2"><a href="{% url 'view-room' object.id %}" class="btn btn-primary btn-sm">View</a></div>
                 <div class="p-2"><a href="{% url 'update-room' object.id %}" class="btn btn-warning btn-sm">Update</a></div>
               </div>
@@ -28,6 +33,18 @@
         {% else %}
             <p>No rooms found</p>
         {% endif %}
+    </div>
+    <div class="col-2">
+        <h5>Recent Activities</h5>
+        <ul>
+            {% for message in messages %}
+            <li>
+                <small>@{{ message.user }} {{ message.created_at|timesince }} ago</small><br />
+                <small>Replied on {{ message.user}}</small>
+                <p>{{ message.body|slice:50 }} ...</p>
+            </li>
+            {% endfor %}
+        </ul>
     </div>
 </div>
 {% endblock content %}

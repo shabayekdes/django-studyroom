@@ -1,32 +1,45 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h1>Welcome </h1>
-<div class"card">
-    <h5 class="card-title">{{ room.name }}</h5>
-    <div class="card-body">
-        <p>{{ room.description }}</p>
-        <a href="{% url 'update-room' room.id %}" class="btn btn-warning">Update</a>
+<div class="row">
+    <div class="col-md-10">
+
+        <div class"card">
+            <h2 class="card-title">{{ room.name }}</h2>
+            <div class="card-body">
+                <p>{{ room.description }}</p>
+                <a href="{% url 'update-room' room.id %}" class="btn btn-warning">Update</a>
+            </div>
+        </div>
+        
+        <h3>Chat Messages</h3>
+        {% for message in messages %}
+        <div class"card">
+            <h5 class="card-title">@{{ message.user }} {{ message.created_at|timesince }} ago</h5>
+            <div class="card-body">
+                <p>{{ message.body }}</p>
+            </div>
+        </div>
+        {% endfor %}
+        
+        {% if request.user.is_authenticated %}
+        <form method="POST" action="">
+            {% csrf_token %}
+            {{ message_form.as_p }}
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+        {% else %}
+        <p>You must be logged in to post a message</p>
+        {% endif %}
+    </div>
+    <div class="col-md-2">
+        <h3>Participants</h3>
+        <ul>
+        {% for participant in participants %}
+            <li>{{ participant.username }}</li>
+         {% endfor %}
+        </ul>
     </div>
 </div>
 
-{% for message in messages %}
-<div class"card mt-5">
-    <h5 class="card-title">@{{ message.user }} {{ message.created_at|timesince }} ago</h5>
-
-    <div class="card-body">
-        <p>{{ message.body }}</p>
-    </div>
-</div>
-{% endfor %}
-
-{% if request.user.is_authenticated %}
-<form method="POST" action="">
-    {% csrf_token %}
-    {{ message_form.as_p }}
-    <button type="submit" class="btn btn-primary">Submit</button>
-</form>
-{% else %}
-<p>You must be logged in to post a message</p>
-{% endif %}
 {% endblock %}
