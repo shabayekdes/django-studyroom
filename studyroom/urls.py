@@ -17,6 +17,7 @@ from django.contrib import admin
 from django.urls import path, include
 
 from accounts.views import (
+        home,
         show_profile,
         register_view,
         login_view,
@@ -26,6 +27,7 @@ from accounts.views import (
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('rooms/', include('rooms.urls')),
+    path('', home, name='home'),
     path('profile/<int:id>', show_profile, name='show-profile'),
     path('register/', register_view, name='register'),
     path('login/', login_view, name='login'),
