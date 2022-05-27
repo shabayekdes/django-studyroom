@@ -4,6 +4,7 @@ from .views import (
     list_rooms,
     view_room,
     create_room,
+    delete_room,
     update_room
 )
 
@@ -12,4 +13,5 @@ urlpatterns = [
     path('create/', create_room, name='create-room'),
     path('<int:id>/', view_room, name='view-room'),
     path('<int:id>/edit/', update_room, name='update-room'),
+    path('<int:id>/delete/', delete_room, name='delete-room'),
 ]

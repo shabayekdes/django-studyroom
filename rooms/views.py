@@ -78,3 +78,17 @@ def update_room(request, id=None):
         'object': obj,
     }
     return render(request, 'rooms/update.html', context=context)
+
+@login_required(login_url='/login/')
+def delete_room(request, id=None):
+    obj = get_object_or_404(Room, pk=id)
+    if request.user != obj.host:
+        return HttpResponse('You are not allowed to delete this room.')
+
+    if request.method == 'POST' and obj:
+        obj.delete()
+        return redirect('list-rooms')
+    context = {
+        'object': obj,
+    }
+    return render(request, 'rooms/delete.html', context=context)

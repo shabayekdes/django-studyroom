@@ -27,6 +27,7 @@
                 </div>
                 <div class="p-2"><a href="{% url 'view-room' object.id %}" class="btn btn-primary btn-sm">View</a></div>
                 <div class="p-2"><a href="{% url 'update-room' object.id %}" class="btn btn-warning btn-sm">Update</a></div>
+                <div class="p-2"><a href="{% url 'delete-room' object.id %}" class="btn btn-danger btn-sm">Delete</a></div>
               </div>
             {% endfor %} 
         {% else %}
