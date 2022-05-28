@@ -4,10 +4,23 @@ from django.contrib.auth import login, logout
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 
+from rooms.models import Room
+from chat_messages.models import Message
+from topics.models import Topic
+
 # Create your views here.
 def home(request):
-    return render(request, 'home.html')
-    
+    rooms = Room.objects.all()
+    messages = Message.objects.all()
+    topics = Topic.objects.all()
+    context = {
+        'rooms': rooms,
+        'rooms_count': rooms.count(),
+        'topics': topics,
+        'messages': messages,
+    }
+    return render(request, 'home.html', context=context)
+
 def login_view(request):
     if request.user.is_authenticated:
         return redirect("list-rooms")
