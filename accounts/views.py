@@ -58,9 +58,11 @@ def register_view(request):
 def show_profile(request, id=None):
     user = User.objects.get(id=id)
     rooms = user.room_set.all()
+    topics = Topic.objects.all()
 
     context = {
         'user': user,
+        'topics': topics,
         'rooms': rooms,
     }
-    return render(request, "accounts/show_profile.html", context=context)
+    return render(request, "accounts/profile.html", context=context)
