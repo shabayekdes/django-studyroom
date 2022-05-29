@@ -14,8 +14,7 @@ import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
+BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
@@ -104,7 +103,7 @@ POSTGRES_READY = (
     and POSTGRES_HOST is not None
     and POSTGRES_PORT is not None
 )
-print(POSTGRES_READY)
+
 if POSTGRES_READY:
     DATABASES = {
         "default": {
