@@ -21,10 +21,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-2%!%2o*#s9_a$$2&lj0a(0wssxgq1wz$htjvoem$c&7(4mu=9w'
+SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = str(os.environ.get('DEBUG')) == "1" # 1 == True
 
 ALLOWED_HOSTS = ['djstudy-room.herokuapp.com', '127.0.0.1']
 
@@ -154,9 +154,9 @@ STATICFILES_DIRS = [
     BASE_DIR / "static", # os.path.join(BASE_DIR, 'static')
 ]
 
-STATIC_ROOT = BASE_DIR / "staticfiles-cdn" # in production, we want cdn
+STATIC_ROOT = BASE_DIR / "static" # in production, we want cdn
 
-MEDIA_ROOT = BASE_DIR / "staticfiles-cdn" / "uploads"
+MEDIA_ROOT = BASE_DIR / "static" / "uploads"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
