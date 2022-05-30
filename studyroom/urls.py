@@ -19,6 +19,7 @@ from django.urls import path, include
 from accounts.views import (
         home,
         show_profile,
+        update_profile,
         register_view,
         login_view,
         logout_view
@@ -29,6 +30,7 @@ urlpatterns = [
     path('rooms/', include('rooms.urls')),
     path('', home, name='home'),
     path('profile/<int:id>', show_profile, name='show-profile'),
+    path('profile/edit', update_profile, name='update-profile'),
     path('register/', register_view, name='register'),
     path('login/', login_view, name='login'),
     path('logout/', logout_view, name='logout')

@@ -1,5 +1,6 @@
+from gettext import install
 from django.shortcuts import render, redirect
-from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
+from django.contrib.auth.forms import AuthenticationForm, UserCreationForm, PasswordChangeForm
 from django.contrib.auth import login, logout
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
@@ -7,6 +8,7 @@ from django.contrib.auth.decorators import login_required
 from rooms.models import Room
 from chat_messages.models import Message
 from topics.models import Topic
+from .forms import ProfileUpdateForm
 
 # Create your views here.
 def home(request):
@@ -66,3 +68,13 @@ def show_profile(request, id=None):
         'rooms': rooms,
     }
     return render(request, "accounts/profile.html", context=context)
+
+@login_required
+def update_profile(request, id=None):
+    user = request.user
+    form = ProfileUpdateForm(request.POST or None, instance=user)
+    if form.is_valid():
+        user_obj = form.save()
+        return redirect('show-profile', id=user_obj.id)
+    context = {"form": form}
+    return render(request, "accounts/update_profile.html", context=context)
