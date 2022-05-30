@@ -52,7 +52,7 @@ def register_view(request):
         user.username = user.username.lower()
         user.save()
         login(request, user)
-        return redirect('list-rooms')
+        return redirect('home')
     context = {"form": form}
     return render(request, "accounts/register.html", context)
 
