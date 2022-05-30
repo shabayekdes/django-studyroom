@@ -61,11 +61,13 @@ def show_profile(request, id=None):
     user = User.objects.get(id=id)
     rooms = user.room_set.all()
     topics = Topic.objects.all()
-
+    messages = Message.objects.all()
+    
     context = {
         'user': user,
         'topics': topics,
         'rooms': rooms,
+        'messages': messages,
     }
     return render(request, "accounts/profile.html", context=context)
 
