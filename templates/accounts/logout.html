@@ -1,16 +1,29 @@
-{% extends "base.html" %}
+{% extends "layout/app.html" %} {% block content %}
 
-{% block content %}
+<main class="auth layout">
+  <div class="container">
+    <div class="layout__box">
+      <div class="layout__boxHeader">
+        <div class="layout__boxTitle">
+          <h3>Logout</h3>
+        </div>
+      </div>
+      <div class="layout__body">
+        {% if request.user.is_authenticated %}
+        <h2 class="auth__tagline">Are you sure you want to logout?</h2>
 
-{% if request.user.is_authenticated %}
-    <div style='margin-top:30px;'>
-        <form method='POST'>{% csrf_token %}
-            <p>Are you sure you want to logout?</p>
-            <button type='submit'>Yes, logout.</button>
+        <form method="POST">
+          {% csrf_token %}
+          <button class="btn btn--main" type="submit">Yes, logout.</button>
         </form>
+        {% else %}
+        <div class="auth__action">
+          <p>You're not logged in. Would you like to</p>
+          <a href="{% url 'login' %}" class="btn btn--link">login</a>
+        </div>
+        {% endif %}
+      </div>
     </div>
-{% else %}
-<p>You're not logged in. Would you like to <a href='/login/'>login</a>?</p>
-{% endif %}
-
+  </div>
+</main>
 {% endblock %}
